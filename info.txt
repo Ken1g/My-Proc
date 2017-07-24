@@ -1,0 +1,26 @@
+//////////////////////////MY PROC INFO/////////////////////////////////////////////////////////
+
+[immediate operator][OpCode][Op1][Rd][Op2]
+24                                       0 
+
+#NUM		info				value
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+31  		immediate operator		0  		operand 2 is a register
+			 			1  		operand 2 is a immediate value
+
+[30 - 27]  	OpCode				0000 [AND] 	Rd := Op1 AND Op2
+						0001 [EOR] 	Rd := Op1 EOR Op2
+						0010 [SUB] 	Rd := Op1 - Op2 
+						0011 [RSB] 	Rd := Op2 - Op1
+						0100 [ADD] 	Rd := Op1 + Op2
+						0101 [XCHG] 	Op1 <-> Op2
+						0111 [MOV]	Rd := Op2
+						1000 [MVN]	Rd := NOT Op2
+						1001 [MULL] 	Rd := Op1 * Op2
+
+[26 - 23] 	1-st operand register
+
+[22 - 19]	Destination register 
+
+[18 - 0]	2-nd operand register
