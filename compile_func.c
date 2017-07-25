@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <malloc.h>
+#include <string.h>
+#include "compile_func.h"
+
 int dec_to_bin(int dec, char* bin, int pos, int length)
 {
 	int max = 1;
@@ -17,6 +22,7 @@ int dec_to_bin(int dec, char* bin, int pos, int length)
 		max /= 2;
 		i++;
 	}
+	
 	return 0;
 }
 
@@ -28,8 +34,8 @@ int two_operands_ignore_first(char* str, int start, char* result)
         int iop1, iop2, iop3;
         int i, k;
 
-        op1 = malloc(sizeof(char) * 13);
-        op3 = malloc(sizeof(char) * 13);
+        op1 = malloc(sizeof(char) * 5);
+        op3 = malloc(sizeof(char) * 20);
         k = 0;
         i = start;
         while (str[i] != ',')
@@ -64,8 +70,8 @@ int two_operands_ignore_dest(char* str, int start, char* result)
         int iop1, iop2, iop3;
         int i, k;
 
-        op2 = malloc(sizeof(char) * 13);
-        op3 = malloc(sizeof(char) * 13);
+        op2 = malloc(sizeof(char) * 5);
+        op3 = malloc(sizeof(char) * 20);
         k = 0;
         i = start;
         while (str[i] != ',')
@@ -101,9 +107,9 @@ int three_operands(char* str, int start, char* result)
 	int iop1, iop2, iop3;
 	int i, k;
 	
-	op1 = malloc(sizeof(char) * 13);
-	op2 = malloc(sizeof(char) * 13);
-	op3 = malloc(sizeof(char) * 13);
+	op1 = malloc(sizeof(char) * 5);
+	op2 = malloc(sizeof(char) * 5);
+	op3 = malloc(sizeof(char) * 20);
 	k = 0;
 	i = start;
 	while (str[i] != ',')
