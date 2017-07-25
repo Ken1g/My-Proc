@@ -1,6 +1,6 @@
 //////////////////////////MY PROC INFO/////////////////////////////////////////////////////////
 
-[immediate operator][OpCode][Op1][Rd][Op2]
+[immediate operator][OpCode][Rd][Op1][Op2]
 24                                       0 
 
 #NUM		info				value
@@ -15,12 +15,12 @@
 						0011 [RSB] 	Rd := Op2 - Op1
 						0100 [ADD] 	Rd := Op1 + Op2
 						0101 [XCHG] 	Op1 <-> Op2
-						0111 [MOV]	Rd := Op2
-						1000 [MVN]	Rd := NOT Op2
-						1001 [MULL] 	Rd := Op1 * Op2
+						0110 [MOV]	Rd := Op2
+						0111 [MVN]	Rd := NOT Op2
+						1000 [MULL] 	Rd := Op1 * Op2
 
-[26 - 23] 	1-st operand register
+[26 - 23]       Destination register
 
-[22 - 19]	Destination register 
+[22 - 19] 	1-st operand register
 
 [18 - 0]	2-nd operand register

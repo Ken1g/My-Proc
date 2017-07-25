@@ -1,0 +1,11 @@
+and r1, r2, r3
+eor r1, r2, r3
+sub r1, r2, r3
+rsb r1, r2, r3
+add r1, r2, r3
+xchg r1, r2
+mov r1, r2     
+mov r1, #1023
+mvn r1, r2
+mvn r1, #1023
+mull r1, r2, r3
