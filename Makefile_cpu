@@ -1,0 +1,14 @@
+all: cpu
+
+cpu: cpu.o cpu_func.o
+	gcc -g cpu.o cpu_func.o -o cpu
+
+compile_func.o: cpu_func.c
+	gcc -c cpu_func.c
+
+compilator.o: cpu.c
+	gcc -c cpu.c
+
+clean:
+	rm -rf *.o cpu
+

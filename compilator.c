@@ -22,7 +22,7 @@ int main()
 		return(FILE_READ_ERROR);
 	else
 	{
-		fgets(fullstr, 30, input);
+		fullstr = fgets(fullstr, 30, input);
 		while(fullstr != NULL)
 		{
 			i = 0;
@@ -84,7 +84,7 @@ int main()
                                 strcat(code, "01000");
                                 eno = three_operands(fullstr, 6, code);
                         }
-			if (eno != 0) 
+			if (eno != 0)
 				return(eno);
 			printf("%s\n", code);
 			fputs(code, output);

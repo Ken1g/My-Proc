@@ -30,7 +30,6 @@ int two_operands_ignore_first(char* str, int start, char* result)
 {
  	char* op1;
         char* op3;
-        char* bin;
         int iop1, iop2, iop3;
         int i, k;
 
@@ -66,7 +65,6 @@ int two_operands_ignore_dest(char* str, int start, char* result)
 {
         char* op2;
         char* op3;
-        char* bin;
         int iop1, iop2, iop3;
         int i, k;
 
@@ -103,7 +101,6 @@ int three_operands(char* str, int start, char* result)
 	char* op1;
 	char* op2;
 	char* op3;
-	char* bin;
 	int iop1, iop2, iop3;
 	int i, k;
 	
