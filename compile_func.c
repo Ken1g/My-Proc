@@ -31,11 +31,10 @@ int two_operands_ignore_first(char* str, int start, char* result)
  	char* op1;
         char* op3;
         int iop1, iop2, iop3;
-        int i, k;
+        int i;
 
         op1 = malloc(sizeof(char) * 5);
         op3 = malloc(sizeof(char) * 20);
-        k = 0;
         i = start;
         while (str[i] != ',')
         {
@@ -66,11 +65,10 @@ int two_operands_ignore_dest(char* str, int start, char* result)
         char* op2;
         char* op3;
         int iop1, iop2, iop3;
-        int i, k;
+        int i;
 
         op2 = malloc(sizeof(char) * 5);
         op3 = malloc(sizeof(char) * 20);
-        k = 0;
         i = start;
         while (str[i] != ',')
         {
@@ -102,12 +100,11 @@ int three_operands(char* str, int start, char* result)
 	char* op2;
 	char* op3;
 	int iop1, iop2, iop3;
-	int i, k;
+	int i;
 	
 	op1 = malloc(sizeof(char) * 5);
 	op2 = malloc(sizeof(char) * 5);
 	op3 = malloc(sizeof(char) * 20);
-	k = 0;
 	i = start;
 	while (str[i] != ',')
 	{

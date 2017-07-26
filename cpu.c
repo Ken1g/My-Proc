@@ -13,7 +13,7 @@ int main()
 	char* opcode;
 	int r[16];
 	int decode[3];
-	int i, j;
+	int i;
 	
 	code = malloc(sizeof(char) * 33);
 	opcode = malloc(sizeof(char) * 5);
@@ -80,6 +80,7 @@ int main()
 		}
 	}
 	free(code);
+	free(opcode);
 	fclose(input);
 		
 	return 0;

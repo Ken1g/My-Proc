@@ -19,8 +19,6 @@ int bin_to_dec(char* bin, int length, int* result)
 	return 0;
 }
 
-
-
 int three_op(char* code, int* decode)
 {
 	int i;
