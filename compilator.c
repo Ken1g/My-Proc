@@ -13,7 +13,7 @@ int main()
 	char* fullstr; 
 	char* command;
 	char* code;
-	int i, eno;
+	int i;
 	
 	fullstr = malloc(sizeof(char) * 30);
 	command = malloc(sizeof(char) * 5);
@@ -36,32 +36,32 @@ int main()
 			if (strcmp(command, "and") == 0)
                         {
                                 strcat(code, "00000");
-                                eno = three_operands(fullstr, 5, code);
+                                three_operands(fullstr, 5, code);
                         }
 			else if (strcmp(command, "eor") == 0)
                         {
                                 strcat(code, "00001");
-                                eno = three_operands(fullstr, 5, code);
+                                three_operands(fullstr, 5, code);
                         }
 			else if (strcmp(command, "sub") == 0)
 			{
 				strcat(code, "00010");
-				eno = three_operands(fullstr, 5, code);				
+				three_operands(fullstr, 5, code);				
 			}
 			else if (strcmp(command, "rsb") == 0)
                         {
                                 strcat(code, "00011");
-                                eno = three_operands(fullstr, 5, code);
+                                three_operands(fullstr, 5, code);
                         }
 			else if (strcmp(command, "add") == 0)
 			{
                                 strcat(code, "00100");
-				eno = three_operands(fullstr, 5, code);
+				three_operands(fullstr, 5, code);
                         }
 			else if (strcmp(command, "xchg") == 0)
                         {
                                 strcat(code, "00101");
-                                eno = two_operands_ignore_dest(fullstr, 6, code);
+                                two_operands_ignore_dest(fullstr, 6, code);
                         }
 			else if (strcmp(command, "mov") == 0)
                         {
@@ -69,7 +69,7 @@ int main()
                                 	strcat(code, "00110");
 				else 
 					strcat(code, "10110");
-				eno = two_operands_ignore_first(fullstr, 5, code);
+				two_operands_ignore_first(fullstr, 5, code);
                         }
 			else if (strcmp(command, "mvn") == 0)
                         {
@@ -77,15 +77,13 @@ int main()
                                         strcat(code, "00111");
                                 else
                                         strcat(code, "10111");
-                                eno = two_operands_ignore_first(fullstr, 5, code);
+                                two_operands_ignore_first(fullstr, 5, code);
                         }
 			else if (strcmp(command, "mull") == 0)
                         {
                                 strcat(code, "01000");
-                                eno = three_operands(fullstr, 6, code);
+                                three_operands(fullstr, 6, code);
                         }
-			if (eno != 0)
-				return(eno);
 			printf("%s\n", code);
 			fputs(code, output);
 			fullstr = fgets(fullstr, 50, input);
