@@ -18,7 +18,7 @@
 						0110 [MOV]	Rd := Op2
 						0111 [MVN]	Rd := NOT Op2
 						1000 [MULL] 	Rd := Op1 * Op2
-
+						1111 [END]
 [26 - 23]       Destination register
 
 [22 - 19] 	1-st operand register

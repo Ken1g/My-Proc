@@ -1,8 +1,14 @@
-mov r1, #50
-mov r2, #100
-mov r1, r2
-add r1, r1, r2
-mov r2, #1
-sub r1, r1, r2
-rsb r1, r2, r1
-mull r1, r1, r1
+mov r1, #3
+mov r2, #4
+mov r3, #5
+and r4, r1, r2
+eor r4, r1, r3
+sub r4, r2, r1
+rsb r4, r1, r2
+add r4, r1, r2
+xchg r1, r2
+xchg r1, r2
+mov r4, r1
+mvn r4, r1
+mull r4, r1, r2
+end

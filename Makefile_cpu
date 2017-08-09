@@ -1,12 +1,12 @@
 all: cpu
 
-cpu: cpu.o cpu_func.o
-	gcc -g cpu.o cpu_func.o -o cpu
+cpu: cpu.o main.o
+	gcc cpu.o main.o -o cpu
 
-compile_func.o: cpu_func.c
-	gcc -c cpu_func.c
+main.o: main.c
+	gcc -c main.c
 
-compilator.o: cpu.c
+cpu.o: cpu.c
 	gcc -c cpu.c
 
 clean:

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <malloc.h>
 #include "compile_func.h"
 
@@ -12,84 +13,82 @@ int main()
 	FILE* output = fopen("output.txt", "w");
 	char* fullstr; 
 	char* command;
-	char* code;
+	uint32_t code;
 	int i;
 	
 	fullstr = malloc(sizeof(char) * 30);
 	command = malloc(sizeof(char) * 5);
-	code = malloc(sizeof(char) * 35);
 	if (input == NULL)
 		return(FILE_READ_ERROR);
 	else
 	{
 		fullstr = fgets(fullstr, 30, input);
-		while(fullstr != NULL)
+		while(strcmp(fullstr, "end\n") != 0)
 		{
 			i = 0;
-			memset(command, '\000', 4); /*clean the string*/
-			while (fullstr[i] != ' ')
+			memset(command, '\000', 4); /* clean the string */
+			while (fullstr[i] != ' ') 
 			{
 				command[i] = fullstr[i];				
 				i++;
-			}
-			memset(code, '\000', 35); 
+			} 
 			if (strcmp(command, "and") == 0)
                         {
-                                strcat(code, "00000");
-                                three_operands(fullstr, 5, code);
+                                code = 0;
+                                three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "eor") == 0)
                         {
-                                strcat(code, "00001");
-                                three_operands(fullstr, 5, code);
+                                code = 0b00001 << 27;
+                                three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "sub") == 0)
 			{
-				strcat(code, "00010");
-				three_operands(fullstr, 5, code);				
+				code = 0b00010 << 27;
+				three_operands(fullstr, 5, &code);				
 			}
 			else if (strcmp(command, "rsb") == 0)
                         {
-                                strcat(code, "00011");
-                                three_operands(fullstr, 5, code);
+                                code = 0b00011 << 27;
+                                three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "add") == 0)
 			{
-                                strcat(code, "00100");
-				three_operands(fullstr, 5, code);
+                                code = 0b00100 << 27;
+				three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "xchg") == 0)
                         {
-                                strcat(code, "00101");
-                                two_operands_ignore_dest(fullstr, 6, code);
+                                code = 0b00101 << 27;
+                                two_operands_ignore_dest(fullstr, 6, &code);
                         }
 			else if (strcmp(command, "mov") == 0)
                         {
 				if (fullstr[8] == 'r')
-                                	strcat(code, "00110");
+                                	code = 0b00110 << 27;
 				else 
-					strcat(code, "10110");
-				two_operands_ignore_first(fullstr, 5, code);
+					code = 0b10110 << 27;
+				two_operands_ignore_first(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "mvn") == 0)
                         {
                                 if (fullstr[8] == 'r')
-                                        strcat(code, "00111");
-                                else
-                                        strcat(code, "10111");
-                                two_operands_ignore_first(fullstr, 5, code);
-                        }
+					code = 0b00111 << 27;
+                                else 
+					code = 0b10111 << 27;
+				two_operands_ignore_first(fullstr, 5, &code);
+			}
 			else if (strcmp(command, "mull") == 0)
                         {
-                                strcat(code, "01000");
-                                three_operands(fullstr, 6, code);
+                                code = 0b01000 << 27;
+                                three_operands(fullstr, 6, &code);
                         }
-			printf("%s\n", code);
-			fputs(code, output);
+			fprintf(output, "%u\n", code);
 			fullstr = fgets(fullstr, 50, input);
 		}	
+		code = 0b01111 << 27;
+		fprintf(output, "%u\n", code);
 	}
-	free(code);
 	free(fullstr);
 	free(command);
 	fclose(input);

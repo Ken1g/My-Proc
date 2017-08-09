@@ -1,0 +1,4 @@
+*.swo
+*.o
+/output.txt
+

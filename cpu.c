@@ -1,88 +1,105 @@
-#define FILE_READ_ERROR -100
+#define OUT_OF_MEMORY   -102
 
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <malloc.h>
-#include "cpu_func.h"
+#include <stdlib.h>
+#include <string.h>
+#include "cpu.h"
 
-int main()
+int create_cpu(cpu** new_cpu) 
 {
-	FILE* input = fopen("output.txt", "r");
-	char* code;
-	char* opcode;
-	int r[16];
-	int decode[3];
-	int i;
-	
-	code = malloc(sizeof(char) * 33);
-	opcode = malloc(sizeof(char) * 5);
-	if (input == NULL)
-		return(FILE_READ_ERROR);
-	else
-	{
-		code = fgets(code, 33, input);
-		while(code != NULL)
-                {		
-			for (i = 1; i <= 4; i++)
-				opcode[i - 1] = code[i];			
-			if (strcmp(opcode, "0000") == 0) /*AND*/
-			{
-				three_op(code, decode);
-			}
-			else if (strcmp(opcode, "0001") == 0) /*EOR*/
-                        {
-                                three_op(code, decode);
-                        }
-			else if (strcmp(opcode, "0010") == 0) /*SUB*/
-                        {
-                                three_op(code, decode);
-				r[decode[0]] = r[decode[1]] - r[decode[2]];
-                        }
-			else if (strcmp(opcode, "0011") == 0) /*RSB*/
-                        {
-                                three_op(code, decode);
-				r[decode[0]] = r[decode[2]] - r[decode[1]];
-                        }
-			else if (strcmp(opcode, "0100") == 0) /*ADD*/
-                        {
-                                three_op(code, decode);
-				r[decode[0]] = r[decode[1]] + r[decode[2]];
-                        }
-			else if (strcmp(opcode, "0101") == 0) /*XCHG*/
-                        {
-                                
-                        }
-			else if (strcmp(opcode, "0110") == 0) /*MOV*/
-                        {
-				if (code[0] == '0')
-				{
-					two_op_dest(code, decode);
-					r[decode[0]] = r[decode[1]];
-				}
-				else
-				{
-					two_op_dest(code, decode);
-					r[decode[0]] = decode[1];
-				}
-			}
-			else if (strcmp(opcode, "0111") == 0) /*MVN*/
-                        {
-
-                        }
-			else if (strcmp(opcode, "1000") == 0) /*MULL*/
-                        {
-                                three_op(code, decode);
-				r[decode[0]] = r[decode[1]] * r[decode[2]];
-                        }
-			code = fgets(code, 33, input);
-			printf("%d\n", r[1]);
-		}
+	*new_cpu = malloc(sizeof(cpu));
+	if (*new_cpu == NULL) 
+	{	
+		free(*new_cpu);
+		return(OUT_OF_MEMORY);
 	}
-	free(code);
-	free(opcode);
-	fclose(input);
-		
+	
 	return 0;
 }
 
+int delete_cpu(cpu** cpu) 
+{
+	free(*cpu);
+	*cpu = NULL;
+	
+	return 0;
+}
+
+int and(int dest, int first, int second, cpu* cpu)
+{
+	cpu->reg[dest] = cpu->reg[first] & cpu->reg[second];
+
+	return 0;
+}
+
+int eor(int dest, int first, int second, cpu* cpu)
+{
+        cpu->reg[dest] = cpu->reg[first] ^ cpu->reg[second];
+
+        return 0;
+}
+
+int sub(int dest, int first, int second, cpu* cpu)
+{
+        cpu->reg[dest] = cpu->reg[first] - cpu->reg[second];
+
+        return 0;
+}
+
+int rsb(int dest, int first, int second, cpu* cpu)
+{
+        cpu->reg[dest] = cpu->reg[second] - cpu->reg[first];
+
+        return 0;
+}
+
+int add(int dest, int first, int second, cpu* cpu)
+{
+        cpu->reg[dest] = cpu->reg[first] + cpu->reg[second];
+
+        return 0;
+}
+
+int xchg(int first, int second, cpu* cpu)
+{
+        cpu->r = cpu->reg[first];
+	cpu->reg[first] = cpu->reg[second];
+	cpu->reg[second] = cpu->r;
+	
+        return 0;
+}
+
+int mov(int immediate, int dest, int second, cpu* cpu)
+{
+        if (immediate == 0)
+		cpu->reg[dest] = cpu->reg[second];
+	else 
+		cpu->reg[dest] = second; 
+
+        return 0;
+}
+
+int mvn(int immediate, int dest, int second, cpu* cpu)
+{
+        if (immediate == 0)
+                cpu->reg[dest] = ~(cpu->reg[second]);
+        else
+                cpu->reg[dest] = ~(second);
+
+        return 0;
+}
+
+int mull(int dest, int first, int second, cpu* cpu)
+{
+        cpu->reg[dest] = cpu->reg[first] * cpu->reg[second];
+
+        return 0;
+}
+
+int end(cpu* cpu)
+{
+	cpu->work = 0;
+	
+	return 0;
+}
