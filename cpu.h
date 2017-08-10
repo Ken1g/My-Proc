@@ -1,6 +1,19 @@
 #ifndef CPU
 #define CPU
 
+#define AND 	0b00000
+#define EOR 	0b00001
+#define SUB 	0b00010
+#define RSB 	0b00011
+#define ADD 	0b00100
+#define XCHG 	0b00101
+#define MOV_OP	0b00110
+#define MOV_IMM	0b10110
+#define MVN_OP	0b00111
+#define MVN_IMM	0b10111
+#define MULL	0b01000
+#define END	0b01111
+
 typedef struct cpu
 {
 	int reg[16];

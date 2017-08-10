@@ -16,8 +16,8 @@ int main()
 	uint32_t code;
 	int i;
 	
-	fullstr = malloc(sizeof(char) * 30);
-	command = malloc(sizeof(char) * 5);
+	fullstr = malloc(sizeof(char) * FULL_STR_LENGTH);
+	command = malloc(sizeof(char) * COMMAND_LENGTH);
 	if (input == NULL)
 		return(FILE_READ_ERROR);
 	else
@@ -39,48 +39,48 @@ int main()
                         }
 			else if (strcmp(command, "eor") == 0)
                         {
-                                code = 0b00001 << 27;
+                                code = EOR;
                                 three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "sub") == 0)
 			{
-				code = 0b00010 << 27;
+				code = SUB;
 				three_operands(fullstr, 5, &code);				
 			}
 			else if (strcmp(command, "rsb") == 0)
                         {
-                                code = 0b00011 << 27;
+                                code = RSB;
                                 three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "add") == 0)
 			{
-                                code = 0b00100 << 27;
+                                code = ADD;
 				three_operands(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "xchg") == 0)
                         {
-                                code = 0b00101 << 27;
+                                code = XCHG;
                                 two_operands_ignore_dest(fullstr, 6, &code);
                         }
 			else if (strcmp(command, "mov") == 0)
                         {
 				if (fullstr[8] == 'r')
-                                	code = 0b00110 << 27;
+                                	code = MOV_OP;
 				else 
-					code = 0b10110 << 27;
+					code = MOV_IMM;
 				two_operands_ignore_first(fullstr, 5, &code);
                         }
 			else if (strcmp(command, "mvn") == 0)
                         {
                                 if (fullstr[8] == 'r')
-					code = 0b00111 << 27;
+					code = MVN_OP;
                                 else 
-					code = 0b10111 << 27;
+					code = MVN_IMM;
 				two_operands_ignore_first(fullstr, 5, &code);
 			}
 			else if (strcmp(command, "mull") == 0)
                         {
-                                code = 0b01000 << 27;
+                                code = MULL;
                                 three_operands(fullstr, 6, &code);
                         }
 			fprintf(output, "%u\n", code);

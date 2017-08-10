@@ -29,48 +29,50 @@ int main()
 			second = (code << 13) >> 13;
 			switch(opcode)
 			{
-				case 0:
+				case AND:
 					and(dest, first, second, mycpu);
 					break;
-				case 1:
+				case EOR:
 					eor(dest, first, second, mycpu);
 					break;
-				case 2:
+				case SUB:
 					sub(dest, first, second, mycpu);
 					break;
-				case 3: 
+				case RSB: 
 					rsb(dest, first, second, mycpu);
 					break;
-				case 4:
+				case ADD:
 					add(dest, first, second, mycpu);
 					break;
-				case 5:
+				case XCHG:
 					xchg(first, second, mycpu);
 					break;
-				case 6:
+				case MOV_OP:
 					mov(0, dest, second, mycpu);
 					break;
-				case 22:
+				case MOV_IMM:
 					mov(1, dest, second, mycpu);
 					break;
-				case 7:
+				case MVN_OP:
 					mvn(0, dest, second, mycpu);
 					break;
-				case 23:
+				case MVN_IMM:
 					mvn(1, dest, second, mycpu);
 					break;
-				case 8:
+				case MULL:
 					mull(dest, first, second, mycpu);
 					break;
-				case 15:
+				case END:
 					end(mycpu);
 					break;
 			}
+			/*
 			printf("reg[1] = %u\n", mycpu->reg[1]);
 	                printf("reg[2] = %u\n", mycpu->reg[2]);
 			printf("reg[3] = %u\n", mycpu->reg[3]);
                         printf("reg[4] = %u\n", mycpu->reg[4]);
 			printf("\n");
+			*/
 			fscanf(input,"%u", &code);		
 		}
 		delete_cpu(&mycpu);
