@@ -1,8 +1,13 @@
 #ifndef FUNC
 #define FUNC
 
+#include "hash.h"
+#include <stdint.h>
+
 #define FULL_STR_LENGTH 30
-#define COMMAND_LENGTH 5
+#define COMMAND_LENGTH 20
+#define MAX_LOOP_NAME_LENGTH 30
+#define MAX_LENGTH_OF_STR 30
 
 #define AND     0b00000000000000000000000000000000
 #define EOR     0b00001000000000000000000000000000
@@ -15,6 +20,7 @@
 #define MVN_OP  0b00111000000000000000000000000000
 #define MVN_IMM 0b10111000000000000000000000000000
 #define MULL    0b01000000000000000000000000000000
+#define JMP 	0b01001000000000000000000000000000
 #define END     0b01111000000000000000000000000000
 
 /*
@@ -36,5 +42,7 @@ int two_operands_ignore_dest(char* str, int start, unsigned int* result);
 /  where: (int start) - the position in (char* str), where the first operand starts
 */
 int three_operands(char* str, int start, unsigned int* result);
+
+int loop(char* str, int start, uint32_t* result, HashTableType* hashTable);
 
 #endif

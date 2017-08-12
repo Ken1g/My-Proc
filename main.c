@@ -6,10 +6,11 @@
 #include <malloc.h>
 #include <stdint.h>
 #include "cpu.h"
+#include "cpu.c"
 
 int main()
 {
-	FILE* input = fopen("output.txt", "r");
+	FILE* input = fopen("output.bin", "rb");
 	uint32_t code, opcode;
 	uint32_t dest, first, second;
 	cpu* mycpu;
@@ -20,9 +21,11 @@ int main()
         {
 		create_cpu(&mycpu);		
 		mycpu->work = 1;
-		fscanf(input,"%u", &code);
+		fread(&code, sizeof(uint32_t), 1, input);
+		printf("%u\n", code);
 		while (mycpu->work == 1)
 		{
+			fseek(input, 4, SEEK_CUR);
 			opcode = code >> 27;
 			dest = (code << 5) >> 28;
 			first = (code << 9) >> 28;
@@ -66,13 +69,6 @@ int main()
 					end(mycpu);
 					break;
 			}
-			/*
-			printf("reg[1] = %u\n", mycpu->reg[1]);
-	                printf("reg[2] = %u\n", mycpu->reg[2]);
-			printf("reg[3] = %u\n", mycpu->reg[3]);
-                        printf("reg[4] = %u\n", mycpu->reg[4]);
-			printf("\n");
-			*/
 			fscanf(input,"%u", &code);		
 		}
 		delete_cpu(&mycpu);

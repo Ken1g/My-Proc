@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "compile_func.h"
+#include "hash.h"
 
 int two_operands_ignore_first(char* str, int start, uint32_t* result)
 {
@@ -108,5 +109,24 @@ int three_operands(char* str, int start, uint32_t* result)
 	return 0;
 }
 
-		
-	
+int loop(char* str, int start, uint32_t* result, HashTableType* hashTable)
+{
+	char* loopname;
+	Node* node;
+	int i, adress;
+
+	loopname = (char*) calloc(20, sizeof(char));
+	i = start;
+	while (str[i] != '\n')
+        {
+                loopname[i - start] = str[i];
+                i++;
+        }
+
+	node = find_Node(loopname, hashTable);
+	adress = node->adress;
+	free(loopname);
+	*result = *result | adress;
+
+	return 0;
+}

@@ -1,14 +1,20 @@
 mov r1, #3
+jmp loop
 mov r2, #4
 mov r3, #5
 and r4, r1, r2
+loop:
 eor r4, r1, r3
 sub r4, r2, r1
 rsb r4, r1, r2
+jmp rer
 add r4, r1, r2
 xchg r1, r2
 xchg r1, r2
 mov r4, r1
+rer:
+jmp erw
 mvn r4, r1
+erw:
 mull r4, r1, r2
 end

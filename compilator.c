@@ -6,28 +6,53 @@
 #include <stdint.h>
 #include <malloc.h>
 #include "compile_func.h"
+#include "hash.h"
 
 int main()
 {
 	FILE* input = fopen("input.txt", "r");
-	FILE* output = fopen("output.txt", "w");
+	FILE* output = fopen("output.bin", "wb");
 	char* fullstr; 
 	char* command;
+	char* loopname;
 	uint32_t code;
+	int ILC = 0x0;
 	int i;
+	HashTableType* hashTable;
 	
 	fullstr = malloc(sizeof(char) * FULL_STR_LENGTH);
 	command = malloc(sizeof(char) * COMMAND_LENGTH);
+	loopname = malloc(sizeof(char) * MAX_LOOP_NAME_LENGTH);
 	if (input == NULL)
 		return(FILE_READ_ERROR);
 	else
 	{
-		fullstr = fgets(fullstr, 30, input);
+//////////////////////////////// FIRST RUN ///////////////////////////////////////
+		
+		hashTable = create_HashTable(hashTable);
+		fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
+                while(strcmp(fullstr, "end\n") != 0)
+             	{
+			if (fullstr[strlen(fullstr) - 2] == ':')
+			{
+				memset(loopname, '\000', MAX_LOOP_NAME_LENGTH);
+				for (i = 0; i < strlen(fullstr) - 2; i++)
+					loopname[i] = fullstr[i];
+				create_Node(loopname, ILC, hashTable);
+			}
+			else
+				ILC += 0x20;          
+                        fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
+		}
+		rewind(input);
+
+//////////////////////////////// SECOND RUN //////////////////////////////////////
+		fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
 		while(strcmp(fullstr, "end\n") != 0)
 		{
 			i = 0;
-			memset(command, '\000', 4); /* clean the string */
-			while (fullstr[i] != ' ') 
+			memset(command, '\000', COMMAND_LENGTH); 
+			while (fullstr[i] != ' ' && fullstr[i] != ':') 
 			{
 				command[i] = fullstr[i];				
 				i++;
@@ -83,17 +108,31 @@ int main()
                                 code = MULL;
                                 three_operands(fullstr, 6, &code);
                         }
-			fprintf(output, "%u\n", code);
-			fullstr = fgets(fullstr, 50, input);
-		}	
-		code = 0b01111 << 27;
-		fprintf(output, "%u\n", code);
+			else if (strcmp(command, "jmp") == 0)
+			{
+				code = JMP;
+				loop(fullstr, 4, &code, hashTable);
+			}
+			else
+			{
+				fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
+				continue;
+			}
+			fwrite(&code, sizeof(uint32_t), 1, output);
+			fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
+		}
+		
+		code = END;
+		fwrite(&code, sizeof(uint32_t), 1, output);
 	}
+	
+	delete_HashTable(hashTable);
 	free(fullstr);
 	free(command);
+	free(loopname);
 	fclose(input);
 	fclose(output);
-	
+
 	return 0;
 }
 
