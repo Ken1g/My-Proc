@@ -1,0 +1,13 @@
+mov r1, #4
+mov r2, #5
+jmp loop1
+add r2, r1, r2
+mull r1, r1, r2
+loop1:
+add r1, r1, r1
+jmp loop2
+sub r1, r1, r2
+loop2:
+add r1, r1, r1
+end
+

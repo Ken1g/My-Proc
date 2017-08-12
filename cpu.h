@@ -12,6 +12,7 @@
 #define MVN_OP	0b00111
 #define MVN_IMM	0b10111
 #define MULL	0b01000
+#define JMP 	0b01001
 #define END	0b01111
 
 typedef struct cpu
@@ -19,6 +20,7 @@ typedef struct cpu
 	int reg[16];
 	int r;
 	int work;
+	int adress;
 } cpu;
 
 int create_cpu(cpu** new_cpu);

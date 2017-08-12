@@ -10,7 +10,7 @@
 
 int main()
 {
-	FILE* input = fopen("input.txt", "r");
+	FILE* input = fopen("jmp.txt", "r");
 	FILE* output = fopen("output.bin", "wb");
 	char* fullstr; 
 	char* command;

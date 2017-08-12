@@ -6,7 +6,6 @@
 #include <malloc.h>
 #include <stdint.h>
 #include "cpu.h"
-#include "cpu.c"
 
 int main()
 {
@@ -22,10 +21,8 @@ int main()
 		create_cpu(&mycpu);		
 		mycpu->work = 1;
 		fread(&code, sizeof(uint32_t), 1, input);
-		printf("%u\n", code);
 		while (mycpu->work == 1)
 		{
-			fseek(input, 4, SEEK_CUR);
 			opcode = code >> 27;
 			dest = (code << 5) >> 28;
 			first = (code << 9) >> 28;
@@ -65,11 +62,15 @@ int main()
 				case MULL:
 					mull(dest, first, second, mycpu);
 					break;
+				case JMP:
+					jmp(second, mycpu);
+					break;
 				case END:
 					end(mycpu);
 					break;
 			}
-			fscanf(input,"%u", &code);		
+			fseek(input, mycpu->adress / 8, SEEK_SET);
+			fread(&code, sizeof(uint32_t), 1, input);
 		}
 		delete_cpu(&mycpu);
 	}
