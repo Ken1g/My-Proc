@@ -12,17 +12,26 @@ int main()
 	FILE* input = fopen("output.bin", "rb");
 	uint32_t code, opcode;
 	uint32_t dest, first, second;
+	uint32_t* binary;
+	int size, i;
 	cpu* mycpu;
 
 	if (input == NULL)
                 return(FILE_READ_ERROR);
         else
         {
+		fseek(input, 0, SEEK_END);     
+    		size = ftell(input);  
+		rewind(input);
+		binary = (uint32_t*) calloc(size / 4, sizeof(uint32_t));
+		for (i = 0; i < size / 4; i++)
+		fread(&binary[i], sizeof(int32_t), 1, input);
+		fclose(input);		
 		create_cpu(&mycpu);		
 		mycpu->work = 1;
-		fread(&code, sizeof(uint32_t), 1, input);
 		while (mycpu->work == 1)
 		{
+			code = binary[mycpu->adress / 32];
 			opcode = code >> 27;
 			dest = (code << 5) >> 28;
 			first = (code << 9) >> 28;
@@ -69,10 +78,10 @@ int main()
 					end(mycpu);
 					break;
 			}
-			fseek(input, mycpu->adress / 8, SEEK_SET);
-			fread(&code, sizeof(uint32_t), 1, input);
 		}
+		//printf("r1 = %d r2 = %d\n r3 = %d\n r4 = %d\n", mycpu->reg[1], mycpu->reg[2], mycpu->reg[3], mycpu->reg[4]);
 		delete_cpu(&mycpu);
+		free(binary);
 	}
 	
 	return 0;
