@@ -1,13 +1,14 @@
-mov r1, #4
-mov r2, #5
-jmp loop1
-add r2, r1, r2
-mull r1, r1, r2
+mov r1, #2
+mov r2, #2
+mov r3, #1
+mov r4, #1
+mov r5, #15
 loop1:
-add r1, r1, r1
-jmp loop2
-sub r1, r1, r2
+cmp r3, r5
+je loop2
+mull r1, r1, r2
+add r3, r3, r4
+jmp loop1
 loop2:
-add r1, r1, r1
 end
 

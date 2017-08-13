@@ -13,38 +13,47 @@
 #define MVN_IMM	0b10111
 #define MULL	0b01000
 #define JMP 	0b01001
+#define CMP	0b01010
+#define JE	0b01011
 #define END	0b01111
 
 typedef struct cpu
 {
 	int reg[16];
 	int r;
+	int cmp_reg;
 	int work;
 	int adress;
 } cpu;
 
-int create_cpu(cpu** new_cpu);
+int create_cpu	(cpu** new_cpu);
 
-int delete_cpu(cpu** cpu);
+int delete_cpu	(cpu** cpu);
 
-int and(int dest, int first, int second, cpu* cpu);
+int and		(int dest, int first, int second, cpu* cpu);
+	
+int eor		(int dest, int first, int second, cpu* cpu);
 
-int eor(int dest, int first, int second, cpu* cpu);
+int sub		(int dest, int first, int second, cpu* cpu);
 
-int sub(int dest, int first, int second, cpu* cpu);
+int rsb		(int dest, int first, int second, cpu* cpu);
 
-int rsb(int dest, int first, int second, cpu* cpu);
+int add		(int dest, int first, int second, cpu* cpu);
 
-int add(int dest, int first, int second, cpu* cpu);
+int xchg	(int first, int second, cpu* cpu);
 
-int xchg(int first, int second, cpu* cpu);
+int mov		(int immediate, int dest, int second, cpu* cpu);
 
-int mov(int immediate, int dest, int second, cpu* cpu);
+int mvn		(int immediate, int dest, int second, cpu* cpu);
 
-int mvn(int immediate, int dest, int second, cpu* cpu);
+int mull	(int dest, int first, int second, cpu* cpu);
 
-int mull(int dest, int first, int second, cpu* cpu);
+int jmp		(int second, cpu* cpu);
 
-int end(cpu* cpu);
+int cmp		(int first, int second, cpu* cpu);
+
+int je		(int second, cpu* cpu);
+	
+int end		(cpu* cpu);
 
 #endif

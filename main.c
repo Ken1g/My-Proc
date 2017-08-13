@@ -74,12 +74,18 @@ int main()
 				case JMP:
 					jmp(second, mycpu);
 					break;
+				case JE:
+					je(second, mycpu);
+					break;
+				case CMP:
+					cmp(first, second, mycpu);
+					break;
 				case END:
 					end(mycpu);
 					break;
 			}
 		}
-		//printf("r1 = %d r2 = %d\n r3 = %d\n r4 = %d\n", mycpu->reg[1], mycpu->reg[2], mycpu->reg[3], mycpu->reg[4]);
+		printf("r1 = %d r2 = %d r3 = %d r4 = %d\n", mycpu->reg[1], mycpu->reg[2], mycpu->reg[3], mycpu->reg[4]);
 		delete_cpu(&mycpu);
 		free(binary);
 	}

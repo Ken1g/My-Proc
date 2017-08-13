@@ -18,7 +18,9 @@
 						0110 [MOV]	Rd := Op2
 						0111 [MVN]	Rd := NOT Op2
 						1000 [MULL] 	Rd := Op1 * Op2
-						1001 [JMP]	operand 2 is an adress of loop
+						1001 [JMP]	operand 2 is an adress of loop to jump
+						1010 [CMP]	put into cmp_reg of cpu (Op2 == Op1)
+						1011 [JE]	operand 2 is an andree of loop to jump
 						1111 [END]
 						
 [26 - 23]       Destination register

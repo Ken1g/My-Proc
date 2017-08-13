@@ -108,3 +108,22 @@ int jmp(int adress, cpu* cpu)
 	cpu->adress = adress;
 	return 0;
 }
+
+int cmp(int first, int second, cpu* cpu)
+{
+	if (cpu->reg[first] == cpu->reg[second])
+		cpu->cmp_reg = 1;
+	else
+		cpu->cmp_reg = 0;
+	cpu->adress += 0x20;
+	return 0;	
+}
+
+int je(int adress, cpu* cpu)
+{
+	if (cpu->cmp_reg)
+		cpu->adress = adress;
+	else
+		cpu->adress += 0x20;
+	return 0;
+}

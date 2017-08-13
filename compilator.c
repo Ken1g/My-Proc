@@ -113,6 +113,16 @@ int main()
 				code = JMP;
 				loop(fullstr, 4, &code, hashTable);
 			}
+			else if (strcmp(command, "je") == 0)
+			{
+				code = JE;
+				loop(fullstr, 3, &code, hashTable);
+			}
+			else if (strcmp(command, "cmp") == 0)
+			{
+				code = CMP;
+				two_operands_ignore_dest(fullstr, 5, &code);
+			}
 			else
 			{
 				fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
