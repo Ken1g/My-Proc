@@ -20,7 +20,10 @@
 						1000 [MULL] 	Rd := Op1 * Op2
 						1001 [JMP]	operand 2 is an adress of loop to jump
 						1010 [CMP]	put into cmp_reg of cpu (Op2 == Op1)
-						1011 [JE]	operand 2 is an andree of loop to jump
+						1011 [JE]	operand 2 is an adress of loop to jump
+						1100 [CALL]	operand 2 is an adress of loop to jump
+						1101 [RET]
+						1110 [JNE] 	operand 2 is an adress of loop to jump						
 						1111 [END]
 						
 [26 - 23]       Destination register
@@ -28,3 +31,6 @@
 [22 - 19] 	1-st operand register
 
 [18 - 0]	2-nd operand register
+
+#PROBLEM:
+All the .txt file with instructions for compilator have to ended by '\n' symbol

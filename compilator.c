@@ -10,7 +10,7 @@
 
 int main()
 {
-	FILE* input = fopen("jmp.txt", "r");
+	FILE* input = fopen("call.txt", "r");
 	FILE* output = fopen("output.bin", "wb");
 	char* fullstr; 
 	char* command;
@@ -31,7 +31,7 @@ int main()
 		
 		hashTable = create_HashTable(hashTable);
 		fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
-                while(strcmp(fullstr, "end\n") != 0)
+               	while(strcmp(fullstr, "\n") != 0)	// TODO: change the type of stop strcmp	
              	{
 			if (fullstr[strlen(fullstr) - 2] == ':')
 			{
@@ -45,14 +45,15 @@ int main()
                         fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
 		}
 		rewind(input);
-
+		
 //////////////////////////////// SECOND RUN //////////////////////////////////////
+		
 		fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
-		while(strcmp(fullstr, "end\n") != 0)
+		while(strcmp(fullstr, "\n") != 0)
 		{
 			i = 0;
 			memset(command, '\000', COMMAND_LENGTH); 
-			while (fullstr[i] != ' ' && fullstr[i] != ':') 
+			while (fullstr[i] != ' ' && fullstr[i] != ':' && fullstr[i] != '\n') 
 			{
 				command[i] = fullstr[i];				
 				i++;
@@ -123,6 +124,24 @@ int main()
 				code = CMP;
 				two_operands_ignore_dest(fullstr, 5, &code);
 			}
+			else if (strcmp(command, "jne") == 0)
+			{
+				code = JNE;
+				loop(fullstr, 4, &code, hashTable);
+			}
+			else if (strcmp(command, "call") == 0)
+                        {
+                                code = CALL;
+                                loop(fullstr, 5, &code, hashTable);
+                        }
+			else if (strcmp(command, "ret") == 0)
+                        {
+                                code = RET;
+                        }
+			else if (strcmp(command, "end") == 0)
+			{
+				code = END;
+			}
 			else
 			{
 				fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
@@ -131,9 +150,6 @@ int main()
 			fwrite(&code, sizeof(uint32_t), 1, output);
 			fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
 		}
-		
-		code = END;
-		fwrite(&code, sizeof(uint32_t), 1, output);
 	}
 	
 	delete_HashTable(hashTable);

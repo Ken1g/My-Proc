@@ -1,13 +1,16 @@
 all: cpu
 
-cpu: cpu.o main.o
-	gcc cpu.o main.o -o cpu
+cpu: cpu.o main.o stack.o
+	gcc cpu.o main.o stack.o -o cpu
 
 main.o: main.c
 	gcc -c main.c
 
 cpu.o: cpu.c
 	gcc -c cpu.c
+
+stack.o: stack.c
+	gcc -c stack.c
 
 clean:
 	rm -rf *.o cpu

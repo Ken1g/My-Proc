@@ -6,6 +6,7 @@
 #include <malloc.h>
 #include <stdint.h>
 #include "cpu.h"
+#include "stack.h"
 
 int main()
 {
@@ -79,6 +80,15 @@ int main()
 					break;
 				case CMP:
 					cmp(first, second, mycpu);
+					break;
+				case JNE:
+					jne(second, mycpu);
+					break;
+				case CALL:
+					call(second, mycpu);
+					break;
+				case RET:
+					ret(mycpu);
 					break;
 				case END:
 					end(mycpu);

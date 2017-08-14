@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cpu.h"
+#include "stack.h"
 
 int create_cpu(cpu** new_cpu) 
 {
@@ -15,11 +16,13 @@ int create_cpu(cpu** new_cpu)
 		return(OUT_OF_MEMORY);
 	}
 	(*new_cpu)->adress = 0;
+	create_stack(&((*new_cpu)->stack));
 	return 0;
 }
 
 int delete_cpu(cpu** cpu) 
 {
+	delete_stack(&((*cpu)->stack));
 	free(*cpu);
 	*cpu = NULL;
 	return 0;
@@ -125,5 +128,31 @@ int je(int adress, cpu* cpu)
 		cpu->adress = adress;
 	else
 		cpu->adress += 0x20;
+	return 0;
+}
+
+int jne(int adress, cpu* cpu)
+{
+        if (!cpu->cmp_reg)
+                cpu->adress = adress;
+        else
+                cpu->adress += 0x20;
+        return 0;
+}
+
+int call(int adress, cpu* cpu)
+{
+	cpu->adress += 0x20;
+	push(cpu->stack, &(cpu->adress));
+        cpu->adress = adress;
+        return 0;
+}
+
+int ret(cpu* cpu)
+{
+	int adress;
+	
+	pop(cpu->stack, &adress);
+	cpu->adress = adress;
 	return 0;
 }

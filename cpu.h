@@ -1,6 +1,8 @@
 #ifndef CPU
 #define CPU
 
+#include "stack.h"
+
 #define AND 	0b00000
 #define EOR 	0b00001
 #define SUB 	0b00010
@@ -15,6 +17,9 @@
 #define JMP 	0b01001
 #define CMP	0b01010
 #define JE	0b01011
+#define CALL    0b01100
+#define RET     0b01101
+#define JNE     0b01110
 #define END	0b01111
 
 typedef struct cpu
@@ -24,6 +29,7 @@ typedef struct cpu
 	int cmp_reg;
 	int work;
 	int adress;
+	my_stack* stack;
 } cpu;
 
 int create_cpu	(cpu** new_cpu);
@@ -53,7 +59,13 @@ int jmp		(int second, cpu* cpu);
 int cmp		(int first, int second, cpu* cpu);
 
 int je		(int second, cpu* cpu);
-	
+
+int jne         (int second, cpu* cpu);
+
+int call        (int second, cpu* cpu);
+
+int ret		(cpu* cpu);
+
 int end		(cpu* cpu);
 
 #endif
