@@ -26,13 +26,13 @@ int main()
 		rewind(input);
 		binary = (uint32_t*) calloc(size / 4, sizeof(uint32_t));
 		for (i = 0; i < size / 4; i++)
-		fread(&binary[i], sizeof(int32_t), 1, input);
+			fread(&binary[i], sizeof(int32_t), 1, input);
 		fclose(input);		
 		create_cpu(&mycpu);		
 		mycpu->work = 1;
 		while (mycpu->work == 1)
 		{
-			code = binary[mycpu->adress / 32];
+			code = binary[mycpu->address / 4];
 			opcode = code >> 27;
 			dest = (code << 5) >> 28;
 			first = (code << 9) >> 28;

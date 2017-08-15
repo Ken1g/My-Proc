@@ -113,7 +113,7 @@ int loop(char* str, int start, uint32_t* result, HashTableType* hashTable)
 {
 	char* loopname;
 	Node* node;
-	int i, adress;
+	int i, address;
 
 	loopname = (char*) calloc(20, sizeof(char));
 	i = start;
@@ -124,9 +124,9 @@ int loop(char* str, int start, uint32_t* result, HashTableType* hashTable)
         }
 
 	node = find_Node(loopname, hashTable);
-	adress = node->adress;
+	address = node->address;
 	free(loopname);
-	*result = *result | adress;
+	*result = *result | address;
 
 	return 0;
 }

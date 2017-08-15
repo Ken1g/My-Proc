@@ -59,7 +59,7 @@ int delete_HashTable(HashTableType* HashTable)
 	return 0;
 }
 
-Node* create_Node(datatype data, int adress, HashTableType* hashTable) 	
+Node* create_Node(datatype data, int address, HashTableType* hashTable) 	
 {
 	HashTableIndex index;
 	Node* next_Node = NULL;
@@ -72,7 +72,7 @@ Node* create_Node(datatype data, int adress, HashTableType* hashTable)
 	new_Node->next = next_Node;
 	new_Node->data = malloc(sizeof(datatype) * MAX_LOOP_NAME_LENGTH);
 	strcpy(new_Node->data, data);
-	new_Node->adress = adress;
+	new_Node->address = address;
     	return new_Node;
 }
 

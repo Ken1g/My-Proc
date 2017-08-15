@@ -28,7 +28,7 @@ typedef struct cpu
 	int r;
 	int cmp_reg;
 	int work;
-	int adress;
+	int address;
 	my_stack* stack;
 } cpu;
 

@@ -41,7 +41,7 @@ int main()
 				create_Node(loopname, ILC, hashTable);
 			}
 			else
-				ILC += 0x20;          
+				ILC += 0x4;          
                         fullstr = fgets(fullstr, MAX_LENGTH_OF_STR, input);
 		}
 		rewind(input);
